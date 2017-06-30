@@ -1,4 +1,9 @@
 Purpose
 =======
 
-This is __BabelFish__ - a modular __webhook__ and __slash command__ framework for Mattermost.
+This is **BabelFish** - a modular **webhook** and **slash command** framework for Mattermost.
+
+Docs
+====
+
+The docs can be found on [ReadTheDocs](http://mattermost-babelfish.readthedocs.io/).
