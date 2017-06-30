@@ -25,10 +25,10 @@ Ensure your plugin class is inherting from one of the following classes:
 
 These classes implement the required parsing of the requests & responses, as well as the checks of the mattermost tokens.
 
-An slash command plugin example
--------------------------------
+A slash command plugin example
+------------------------------
 
-Creating new plugins is easy and straight-forward. 
+Creating new plugins is easy and straight-forward as you can see in the following example. 
 
 Say hello
 ~~~~~~~~~
