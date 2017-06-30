@@ -25,46 +25,59 @@ Ensure your plugin class is inherting from one of the following classes:
 
 These classes implement the required parsing of the requests & responses, as well as the checks of the mattermost tokens.
 
-How your class should look like
+An slash command plugin example
 -------------------------------
 
-In case you want to add a plugin for the slash command `/example`, your plugin should be stored under `plugins/example.py` and it should look like this:
+Creating new plugins is easy and straight-forward. 
+
+Say hello
+~~~~~~~~~
+
+Let's say for some reason you want to create a plugin which simply writes ``Hello <name>`` to the channel. In the case, create a new file stored under ``plugins/hello.py`` with the following content:
 
 .. code-block:: python
 
     from base import BaseSlashCommandPlugin
 
 
-    class ExamplePlugin(BaseSlashCommandPlugin):
+    class HelloPlugin(BaseSlashCommandPlugin):
 
         def request(self, username, text):
-            #
-            # your code goes here
-            #
-            return self.response('Your response text')
+            return self.response('Hello ' + text)
 
-- If you want to **overwrite the username** of the response, just set the ``username`` attribute of the ``response()`` method. 
-- If you want your message to be **displayed only to the user** which has executed the slash command, set the ``response_type`` attribute of the ``response()`` method to ``ephermal``.
+Now add the plugin to the ``PLUGINS`` list in the ``settings.py`` file and you're ready to go!
 
-Settings
---------
+Custom response username
+~~~~~~~~~~~~~~~~~~~~~~~~
 
-Just add your plugin settings to the ``settings.py`` file. 
-Your settings variables need to be all uppercase and prefixed with your plugin name and an underscore (``_``).
-
-If you've done this properly, you should've direct access to the settings in your plugin!  
-For example, let's say you've a plugin called ``foo`` with the following settings:
+If you want to send the message as a different user, set the ``username`` argument:
 
 .. code-block:: python
 
-    FOO_SPAM = "eggs"
+            return self.response('Hello ' + text, username="Awesome Plugin")
 
-In your class ``FooPlugin`` you should've access to the settings as follows:
+Add plugin settings
+~~~~~~~~~~~~~~~~~~~
+
+Now let's say you want be able to configure the ``Hello`` string outside of your plugin.
+Let's add a new parameter to the ``settings.py`` file.
+
+Your plugin settings variables need to be…
+
+- all uppercase
+- prefixed with your plugin name and an underscore (``_``)
+- not named ``<PLUGIN>_TOKEN`` or ``<PLUGIN>_WEBHOOK``
+
+So let's add the following variable to the ``settings.py`` file:
 
 .. code-block:: python
 
-    class FooPlugin(BaseSlashCommandPlugin):
+    HELLO_WORD = "Hello"
 
-        def request(self, username, text):
-            print(self.foo)     # should print "spam"
-            # …
+Now let's update our class accordingly and access that string:
+
+.. code-block:: python
+
+            return self.response('{} {}'.format(self.word, text)
+
+As you can see, the variable defined in the settings is now available as instance property. Nice, isn't it?
