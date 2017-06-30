@@ -2,3 +2,4 @@
 __pycache__/
 *.pyc
 settings_local.py
+docs/_build/
